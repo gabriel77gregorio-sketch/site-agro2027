@@ -1,0 +1,143 @@
+﻿---
+import Icon from './Icon.astro';
+import { site, fullAddress, mapsEmbedUrl, mapsDirectionsUrl, telUrl, whatsappUrl } from '../config/site';
+
+const wa = whatsappUrl();
+---
+
+<section class="section visite" id="visite">
+  <div class="container">
+    <div class="head" data-reveal>
+      <span class="eyebrow">Venha nos visitar</span>
+      <h2>Onde a gente está</h2>
+    </div>
+
+    <div class="grid">
+      <div class="info" data-reveal="left">
+        <div class="bloco">
+          <h3><Icon name="map-pin" /> Endereço</h3>
+          <p>{site.address.street}<br />{site.address.district}, {site.address.city} - {site.address.state}<br />CEP {site.address.zip}</p>
+        </div>
+
+        <div class="bloco">
+          <h3><Icon name="clock" /> Horário de funcionamento</h3>
+          <table>
+            <tbody>
+              {site.hours.map((h) => (
+                <tr>
+                  <th scope="row">{h.label}</th>
+                  <td>{h.open.replace(':', 'h')} às {h.close.replace(':', 'h')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="aviso">Em feriados o horário pode ser diferente. Na dúvida, ligue antes.</p>
+          <p class="status-live" id="open-now-visit" aria-live="polite"></p>
+        </div>
+
+        <div class="bloco">
+          <h3><Icon name="phone" /> Telefone</h3>
+          <p class="fone"><a href={telUrl}>{site.phoneDisplay}</a></p>
+        </div>
+
+        <div class="btn-row">
+          <a class="btn btn-gold btn-shine" href={telUrl}><Icon name="phone-call" variant="fill" /> Ligar agora</a>
+          {wa && <a class="btn btn-whatsapp" href={wa}><Icon name="whatsapp-logo" variant="fill" /> WhatsApp</a>}
+          <a class="btn btn-green" href={mapsDirectionsUrl} target="_blank" rel="noopener"><Icon name="map-pin" variant="fill" /> Abrir no mapa</a>
+        </div>
+      </div>
+
+      <div class="mapa" data-reveal="right">
+        <iframe
+          title={`Mapa: ${fullAddress}`}
+          src={mapsEmbedUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visite {
+    background: var(--cream);
+  }
+  .grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .bloco {
+    margin-bottom: 1.6rem;
+  }
+  .bloco h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    color: var(--green-700);
+    margin-bottom: 0.4rem;
+  }
+  .bloco p {
+    margin: 0;
+  }
+  table {
+    width: 100%;
+    max-width: 26rem;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #cdb998;
+  }
+  td {
+    text-align: right;
+    font-weight: 700;
+  }
+  .aviso {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-top: 0.6rem !important;
+  }
+  .status-live {
+    margin-top: 0.4rem !important;
+  }
+  .fone a {
+    font-family: var(--font-title);
+    font-size: 1.7rem;
+    text-decoration: none;
+    color: var(--brown-700);
+  }
+  .mapa {
+    min-height: 340px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 4px solid #fff;
+  }
+  .mapa iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    border: 0;
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3.5rem;
+    }
+    .mapa,
+    .mapa iframe {
+      min-height: 520px;
+    }
+  }
+</style>
+
+<script>
+  import { renderOpenStatus } from '../scripts/open-now';
+  renderOpenStatus(document.getElementById('open-now-visit'));
+</script>
+

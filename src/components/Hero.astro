@@ -1,0 +1,209 @@
+---
+import fachada from '../assets/fachada-hero.jpg';
+import Icon from './Icon.astro';
+import { site, telUrl, mapsDirectionsUrl, whatsappUrl } from '../config/site';
+
+const wa = whatsappUrl();
+---
+
+<section class="hero" id="topo">
+  <div class="bg">
+    <img
+      src={fachada.src}
+      width={fachada.width}
+      height={fachada.height}
+      alt="Fachada da loja Agro São José, em Santo Antônio do Jardim"
+      class="hero-bg"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+  <div class="shade"></div>
+
+  <div class="container content">
+    <span class="badge">
+      <span class="stars" aria-hidden="true">
+        {[0, 1, 2, 3, 4].map(() => <Icon name="star" variant="fill" />)}
+      </span>
+      <strong>{site.rating.score}</strong> no Google · {site.rating.count} avaliações
+    </span>
+
+    <h1>
+      Tudo pra lida do campo,<br />
+      <em>aqui em Santo Antônio do Jardim.</em>
+    </h1>
+
+    <p class="lead">
+      Moda country, selaria, ração, máquinas e remédio pro seu bicho. <br class="desk" />
+      A Agro São José é <strong>mais que uma agropecuária</strong>: é a casa do homem do campo.
+    </p>
+
+    <div class="btn-row">
+      <a class="btn btn-gold btn-pulse" href={telUrl}><Icon name="phone-call" variant="fill" /> Ligar agora</a>
+      {wa && <a class="btn btn-whatsapp" href={wa}><Icon name="whatsapp-logo" variant="fill" /> Chamar no WhatsApp</a>}
+      <a class="btn btn-outline" href={mapsDirectionsUrl} target="_blank" rel="noopener"><Icon name="map-pin" variant="fill" /> Como chegar</a>
+    </div>
+
+    <p class="status-live open-now" id="open-now" aria-live="polite"></p>
+  </div>
+
+  <a href="#moda-country" class="scroll-hint" aria-label="Rolar para baixo">
+    <Icon name="caret-double-down" variant="bold" />
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    color: #fff;
+    min-height: min(92svh, 800px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--green-900);
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+  }
+  .hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 50%;
+    transform-origin: 60% 50%;
+    animation: ken-burns 22s ease-out both;
+  }
+  @keyframes ken-burns {
+    from {
+      transform: scale(1.07);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .shade {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      linear-gradient(to top, rgb(11 61 36 / 0.97) 8%, rgb(11 61 36 / 0.72) 45%, rgb(11 61 36 / 0.2) 100%);
+  }
+  .content {
+    padding-block: 6rem 4.5rem;
+  }
+
+  /* Entrada em sequência dos elementos do topo */
+  .content > * {
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .content > :nth-child(1) { animation-delay: 0.1s; }
+  .content > :nth-child(2) { animation-delay: 0.25s; }
+  .content > :nth-child(3) { animation-delay: 0.4s; }
+  .content > :nth-child(4) { animation-delay: 0.55s; }
+  .content > :nth-child(5) { animation-delay: 0.7s; }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+  }
+
+  .badge {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgb(255 255 255 / 0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgb(255 255 255 / 0.3);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.3rem;
+  }
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--gold);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 8.5vw, 4.6rem);
+    text-shadow: 0 3px 16px rgb(0 0 0 / 0.5);
+    max-width: 18ch;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--gold);
+    font-size: 0.62em;
+    display: inline-block;
+    margin-top: 0.4rem;
+    line-height: 1.2;
+  }
+  .lead {
+    font-size: clamp(1.15rem, 3.4vw, 1.4rem);
+    max-width: 38rem;
+    margin-bottom: 1.8rem;
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.5);
+  }
+  .desk {
+    display: none;
+  }
+  .open-now {
+    margin: 1.4rem 0 0;
+  }
+
+  .scroll-hint {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    translate: -50% 0;
+    font-size: 1.8rem;
+    color: #fff;
+    opacity: 0.8;
+    animation: bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .shade {
+      background:
+        linear-gradient(to right, rgb(11 61 36 / 0.55) 0%, rgb(11 61 36 / 0) 60%),
+        linear-gradient(to top, rgb(11 61 36 / 0.6) 0%, transparent 30%);
+    }
+    /* A foto ocupa a parte direita e se funde com o verde à esquerda, onde fica o texto */
+    .bg {
+      left: 34%;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32%);
+      mask-image: linear-gradient(to right, transparent 0, #000 32%);
+    }
+    .hero-bg {
+      object-position: 68% 50%;
+    }
+    h1 {
+      max-width: 13ch;
+    }
+    .desk {
+      display: inline;
+    }
+    .content {
+      padding-block: 8rem 6rem;
+    }
+    .scroll-hint {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  import { renderOpenStatus } from '../scripts/open-now';
+  renderOpenStatus(document.getElementById('open-now'));
+</script>

@@ -1,0 +1,224 @@
+﻿---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import loja from '../assets/loja-botas.webp';
+import preto from '../assets/chapeu-preto.jpg';
+import marrom from '../assets/chapeu-marrom.jpg';
+import detalhe from '../assets/chapeu-detalhe.jpg';
+import { site, telUrl, mapsDirectionsUrl } from '../config/site';
+
+const itens = [
+  { icon: 'cowboy-hat', nome: 'Chapéus', desc: 'Feltro de qualidade, da marca Pralana' },
+  { icon: 'boot', nome: 'Botas', desc: 'Botas country, inclusive da linha Vimar' },
+  { icon: 'baseball-cap', nome: 'Bonés', desc: 'Pra todo gosto e pra todo estilo' },
+  { icon: 't-shirt', nome: 'Camisas e calças', desc: 'Jeans e camisas pro trabalho e pra festa' },
+];
+---
+
+<section class="section moda" id="moda-country">
+  <div class="container">
+    <div class="head" data-reveal>
+      <span class="eyebrow"><Icon name="star" variant="fill" /> Nosso destaque</span>
+      <h2>Moda Country de verdade, do chapéu à bota.</h2>
+      <p>
+        Chapéu bom a gente conhece pelo feltro, e bota boa pelo couro e pelo conforto. Aqui você
+        chega, experimenta, conversa com quem entende e sai vestido pra qualquer lida, rodeio ou festa.
+      </p>
+    </div>
+
+    <ul class="itens">
+      {itens.map((i, n) => (
+        <li data-reveal style={`--d:${n * 0.1}s`}>
+          <span class="ico"><Icon name={i.icon} /></span>
+          <div>
+            <strong>{i.nome}</strong>
+            <span>{i.desc}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="gallery">
+      <figure class="g-main" data-reveal="zoom">
+        <Image src={loja} alt="Parte da loja com botas country, camisas, bonés e tapete de couro de boi" width={1100} sizes="(min-width: 900px) 60vw, 100vw" />
+      </figure>
+      <figure data-reveal="zoom" style="--d:.1s">
+        <Image src={marrom} alt="Chapéu country marrom da marca Pralana" width={600} sizes="(min-width: 900px) 20vw, 50vw" />
+      </figure>
+      <figure data-reveal="zoom" style="--d:.2s">
+        <Image src={preto} alt="Chapéu country preto da marca Pralana" width={600} sizes="(min-width: 900px) 20vw, 50vw" />
+      </figure>
+      <figure class="g-wide" data-reveal="zoom" style="--d:.3s">
+        <Image src={detalhe} alt="Detalhe da fita e do metal em um chapéu de feltro" width={800} sizes="(min-width: 900px) 25vw, 100vw" />
+      </figure>
+    </div>
+
+    <div class="cta" data-reveal>
+      <p>
+        <strong>Não achou seu número ou modelo?</strong> Liga pra gente que a gente confere o estoque.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-gold btn-shine" href={telUrl}><Icon name="phone-call" variant="fill" /> Ligar: {site.phoneDisplay}</a>
+        <a class="btn btn-outline" href={mapsDirectionsUrl} target="_blank" rel="noopener"><Icon name="map-pin" variant="fill" /> Vir experimentar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .moda {
+    background:
+      radial-gradient(circle at 15% 0%, rgb(184 102 43 / 0.35), transparent 45%),
+      var(--brown-900);
+    color: #fff4e2;
+  }
+  .moda .eyebrow {
+    color: var(--gold);
+  }
+  .head {
+    max-width: 46rem;
+  }
+  .head p {
+    color: #ecd9bd;
+  }
+
+  .itens {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+  }
+  .itens li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    background: rgb(255 255 255 / 0.07);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.1rem;
+  }
+  .ico {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 58px;
+    height: 58px;
+    font-size: 2rem;
+    color: var(--gold);
+    background: rgb(244 196 48 / 0.14);
+    border: 1px solid rgb(244 196 48 / 0.35);
+    border-radius: 16px;
+    transition: transform 0.35s, background 0.35s, color 0.35s;
+  }
+  .itens li:hover .ico {
+    transform: translateY(-4px) rotate(-6deg) scale(1.08);
+    background: var(--gold);
+    color: var(--brown-900);
+  }
+  .itens strong {
+    display: block;
+    font-size: 1.15rem;
+  }
+  .itens span:not(.ico) {
+    font-size: 0.98rem;
+    color: #ecd9bd;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  .gallery figure {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: #000;
+  }
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    transition: transform 0.4s;
+  }
+  .gallery figure:hover img {
+    transform: scale(1.04);
+  }
+  .g-main,
+  .g-wide {
+    grid-column: 1 / -1;
+  }
+  .g-main img,
+  .g-wide img {
+    aspect-ratio: 16 / 9;
+  }
+  .g-wide img {
+    object-position: center 45%;
+  }
+
+  .cta {
+    margin-top: 2.5rem;
+    padding: 1.6rem;
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--brown-900);
+  }
+  .cta p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .cta .btn-gold {
+    background: var(--brown-900);
+    color: var(--gold);
+  }
+
+  @media (min-width: 700px) {
+    .itens {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .itens {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .itens li {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.4rem 1rem;
+    }
+    .gallery {
+      grid-template-columns: 2.2fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      height: 620px;
+    }
+    .g-main {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+    .g-wide {
+      grid-column: 2 / 4;
+      grid-row: 2;
+    }
+    .gallery img,
+    .g-main img,
+    .g-wide img {
+      aspect-ratio: auto;
+    }
+    .cta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 2.4rem;
+    }
+    .cta p {
+      margin: 0;
+    }
+  }
+</style>
+

@@ -1,0 +1,135 @@
+﻿---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import selaria from '../assets/selaria.webp';
+import fachada from '../assets/fachada.webp';
+import { sectors } from '../config/site';
+import Icon from './Icon.astro';
+
+/**
+ * Fotos dos setores. As que usam a fachada recortam um trecho da imagem
+ * (placa ou entrada). Troque por fotos reais de cada setor quando tiver.
+ */
+const photos: Record<string, { src: ImageMetadata; alt: string; pos: string; zoom: number }> = {
+  selaria: { src: selaria, alt: 'Selas e arreios expostos na loja', pos: '60% 50%', zoom: 1 },
+  nutricao: { src: fachada, alt: 'Placa Harpia Nutrição Animal na fachada da loja', pos: '78% 22%', zoom: 1.9 },
+  maquinas: { src: fachada, alt: 'Fachada da Agro São José Máquinas', pos: '6% 55%', zoom: 1.9 },
+  pet: { src: fachada, alt: 'Entrada da loja Agro São José', pos: '45% 85%', zoom: 1.6 },
+};
+---
+
+<section class="section setores" id="setores">
+  <div class="container">
+    <div class="head" data-reveal>
+      <span class="eyebrow">Tudo num lugar só</span>
+      <h2>Os setores da nossa loja</h2>
+      <p>Você resolve tudo numa viagem só pra cidade: o do cavalo, o da roça e o de casa.</p>
+    </div>
+
+    <div class="grid">
+      {sectors.map((s, n) => {
+        const p = photos[s.image];
+        return (
+          <article class="card" data-reveal style={`--d:${n * 0.12}s`}>
+            <div class="photo">
+              <Image
+                src={p.src}
+                alt={p.alt}
+                width={720}
+                sizes="(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 100vw"
+                style={`object-position:${p.pos};transform:scale(${p.zoom});transform-origin:${p.pos}`}
+              />
+              <span class="emoji"><Icon name={s.icon} /></span>
+            </div>
+            <div class="body">
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .setores {
+    background: var(--cream);
+  }
+  .head {
+    max-width: 42rem;
+    margin-bottom: 2.2rem;
+  }
+  .grid {
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: 1fr;
+  }
+  .card {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgb(42 26 15 / 0.12);
+    border-bottom: 5px solid var(--green-500);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  .photo {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--sand);
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .emoji {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.8rem;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    font-size: 1.9rem;
+    border-radius: 50%;
+    color: var(--brown-900);
+    background: var(--gold);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.3);
+    transition: transform 0.35s;
+  }
+  .card:hover .emoji {
+    transform: rotate(-10deg) scale(1.12);
+  }
+  .photo img {
+    transition: transform 0.6s;
+  }
+  .body {
+    padding: 1.1rem 1.4rem 1.5rem;
+  }
+  .body h3 {
+    font-size: 1.45rem;
+    color: var(--green-700);
+  }
+  .body p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  @media (min-width: 700px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+

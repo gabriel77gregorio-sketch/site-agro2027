@@ -1,0 +1,122 @@
+﻿---
+import { Image } from 'astro:assets';
+import fachada from '../assets/fachada.webp';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+---
+
+<section class="section sobre" id="sobre">
+  <div class="container grid">
+    <div class="foto" data-reveal="left">
+      <Image src={fachada} alt="Fachada da loja Agro São José, com a placa redonda do cavalo" width={1000} sizes="(min-width: 900px) 50vw, 100vw" />
+    </div>
+
+    <div class="texto" data-reveal="right">
+      <span class="eyebrow">A loja</span>
+      <h2>{site.tagline}</h2>
+      <p>
+        Aqui em Santo Antônio do Jardim, a Agro São José é lugar de gente que trabalha na terra,
+        cuida de bicho e gosta de se vestir bem. A gente atende com conversa franca, sem
+        enrolação, e te ajuda a achar o que você precisa.
+      </p>
+
+      <ul class="pontos">
+        <li><Icon name="handshake" /><span>Atendimento de gente da terra, que entende da sua lida</span></li>
+        <li><Icon name="seal-check" /><span>Produtos de marcas conhecidas e de confiança</span></li>
+        <li><Icon name="storefront" /><span>Loja grande, com vários setores no mesmo endereço</span></li>
+      </ul>
+
+      <div class="nota">
+        <span class="n">{site.rating.score}</span>
+        <div>
+          <span class="stars" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <Icon name="star" variant="fill" />)}</span>
+          <p>Nota dos clientes no Google, em {site.rating.count} avaliações.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sobre {
+    background: var(--sand);
+  }
+  .grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  .foto img {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .pontos {
+    list-style: none;
+    padding: 0;
+    margin: 1.4rem 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .pontos li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 700;
+  }
+  .pontos :global(.icon) {
+    font-size: 1.9rem;
+    color: var(--green-500);
+    background: rgb(27 138 75 / 0.12);
+    border-radius: 12px;
+    padding: 6px;
+    box-sizing: content-box;
+  }
+  .nota {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.3rem;
+    box-shadow: 0 6px 18px rgb(42 26 15 / 0.1);
+  }
+  .nota .n {
+    font-family: var(--font-title);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--green-700);
+  }
+  .nota p {
+    margin: 0;
+    font-size: 0.98rem;
+    color: var(--muted);
+  }
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    color: #e0a800;
+    font-size: 1.4rem;
+  }
+  .stars :global(.icon) {
+    transform-origin: center;
+    animation: twinkle 2.4s ease-in-out infinite;
+  }
+  .stars :global(.icon:nth-child(2)) { animation-delay: 0.15s; }
+  .stars :global(.icon:nth-child(3)) { animation-delay: 0.3s; }
+  .stars :global(.icon:nth-child(4)) { animation-delay: 0.45s; }
+  .stars :global(.icon:nth-child(5)) { animation-delay: 0.6s; }
+  @keyframes twinkle {
+    0%, 70%, 100% { transform: scale(1); }
+    85% { transform: scale(1.35) rotate(12deg); }
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>
+

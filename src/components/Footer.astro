@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.png';
+import { site, telUrl, mapsDirectionsUrl } from '../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container grid">
+    <div class="marca">
+      <Image src={logo} alt="Logo Agro São José" width={152} height={152} quality={95} class="logo" />
+      <div>
+        <strong>{site.name}</strong>
+        <p>{site.tagline}<br />{site.city}</p>
+      </div>
+    </div>
+
+    <div>
+      <h3>Contato</h3>
+      <p><a href={telUrl}><Icon name="phone-call" variant="fill" /> {site.phoneDisplay}</a></p>
+      <p><a href={site.instagram} target="_blank" rel="noopener"><Icon name="instagram-logo" variant="fill" /> {site.instagramHandle}</a></p>
+      <p><a href={mapsDirectionsUrl} target="_blank" rel="noopener"><Icon name="map-pin" variant="fill" /> {site.address.street}</a></p>
+    </div>
+
+    <div>
+      <h3>Na loja</h3>
+      <p><a href="#moda-country">Moda Country</a></p>
+      <p><a href="#setores">Setores</a></p>
+      <p><a href="#visite">Horários e mapa</a></p>
+    </div>
+  </div>
+  <p class="copy">© {year} {site.name}. Todos os direitos reservados.</p>
+</footer>
+
+<style>
+  .footer {
+    background: var(--green-900);
+    color: #e7f2ea;
+    padding: 3rem 0 1.5rem;
+  }
+  .grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .marca {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .logo {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.35);
+  }
+  .marca strong {
+    font-family: var(--font-title);
+    font-weight: 400;
+    font-size: 1.4rem;
+  }
+  .marca p {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  p {
+    margin: 0 0 0.4rem;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .copy {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin: 2.5rem 0 0;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 800px) {
+    .grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+</style>
+

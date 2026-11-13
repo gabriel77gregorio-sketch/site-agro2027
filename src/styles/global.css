@@ -1,0 +1,307 @@
+@import '@fontsource/alfa-slab-one';
+@import '@fontsource-variable/nunito';
+
+:root {
+  --green-900: #0b3d24;
+  --green-700: #136b3b;
+  --green-500: #1b8a4b;
+  --brown-900: #2a1a0f;
+  --brown-700: #5a3418;
+  --wood: #b8662b;
+  --gold: #f4c430;
+  --cream: #fbf5e9;
+  --sand: #f0e4cb;
+  --ink: #241a12;
+  --muted: #6b5a4a;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgb(42 26 15 / 0.18);
+  --font-title: 'Alfa Slab One', Georgia, serif;
+  --font-body: 'Nunito Variable', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+  padding-bottom: 76px; /* espaço da barra fixa no celular */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  line-height: 1.12;
+  margin: 0 0 0.5em;
+}
+
+h2 {
+  font-size: clamp(1.9rem, 6vw, 2.9rem);
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.container {
+  width: min(1180px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(3rem, 9vw, 6rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--wood);
+  margin-bottom: 0.6rem;
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font: 800 1.05rem var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--brown-900);
+}
+
+.btn-green {
+  background: var(--green-500);
+  color: #fff;
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: #072b14;
+}
+
+.btn-outline {
+  border-color: currentColor;
+  color: inherit;
+  background: transparent;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+@media (max-width: 520px) {
+  .btn-row .btn {
+    width: 100%;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Animações ---------- */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+@keyframes reveal-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.93);
+  }
+}
+@keyframes ring-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(244 196 48 / 0.65);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 16px rgb(244 196 48 / 0);
+  }
+}
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  10%,
+  30% {
+    transform: rotate(-12deg);
+  }
+  20%,
+  40% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(0);
+  }
+}
+@keyframes shine {
+  0%,
+  60% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(240%) skewX(-20deg);
+  }
+}
+
+/* Só esconde antes da animação quando o JS está ativo (a classe .js é colocada no <html>). */
+.js [data-reveal]:not(.is-visible) {
+  opacity: 0;
+}
+.js [data-reveal].is-visible {
+  animation: reveal-up 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) backwards;
+}
+.js [data-reveal='left'].is-visible {
+  animation-name: reveal-left;
+}
+.js [data-reveal='right'].is-visible {
+  animation-name: reveal-right;
+}
+.js [data-reveal='zoom'].is-visible {
+  animation-name: reveal-zoom;
+}
+
+.btn-pulse {
+  animation: ring-pulse 2.2s ease-out infinite;
+}
+
+/* Botão com brilho que passa de tempos em tempos */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  animation: shine 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Status "aberto/fechado" com bolinha */
+.status-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+}
+.status-live:empty {
+  display: none;
+}
+.status-live::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  color: #e5483b;
+  flex: none;
+}
+.status-live[data-open='true']::before {
+  color: #2fd36b;
+  animation: dot-pulse 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    padding-bottom: 0;
+  }
+}

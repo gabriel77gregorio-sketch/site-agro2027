@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+
+const itens = [
+  { icon: 'cowboy-hat', text: 'Moda Country' },
+  { icon: 'horse', text: 'Selaria' },
+  { icon: 'grains', text: 'Nutrição Animal' },
+  { icon: 'tractor', text: 'Máquinas e Ferramentas' },
+  { icon: 'dog', text: 'Pet e Veterinária' },
+];
+---
+
+<div class="marquee" aria-label="Setores da loja">
+  <div class="track">
+    {[0, 1].map((copy) => (
+      <ul aria-hidden={copy === 1 ? 'true' : undefined}>
+        {itens.map((i) => (
+          <li>
+            <Icon name={i.icon} />
+            <span>{i.text}</span>
+            <Icon name="star" variant="fill" class="sep" />
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    background: var(--gold);
+    color: var(--brown-900);
+    overflow: hidden;
+    border-block: 3px solid var(--brown-900);
+    position: relative;
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation: slide 32s linear infinite;
+  }
+  .marquee:hover .track {
+    animation-play-state: paused;
+  }
+  ul {
+    display: flex;
+    flex: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 0 0.85rem 1.4rem;
+    font-family: var(--font-title);
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+  li :global(.icon) {
+    font-size: 1.6rem;
+  }
+  li :global(.sep) {
+    font-size: 0.8rem;
+    margin-left: 0.8rem;
+    color: var(--wood);
+  }
+  @keyframes slide {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

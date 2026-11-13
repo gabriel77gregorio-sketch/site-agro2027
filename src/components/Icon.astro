@@ -1,0 +1,38 @@
+---
+/**
+ * Ícones Phosphor (conjunto "ph") embutidos como SVG no build: sem JS e sem requisição extra.
+ * Uso: <Icon name="phone-call" />  ou  <Icon name="star" variant="fill" />
+ */
+import { getIconData, iconToSVG } from '@iconify/utils';
+import ph from '@iconify-json/ph/icons.json';
+
+interface Props {
+  name: string;
+  variant?: 'duotone' | 'fill' | 'bold' | 'regular';
+  class?: string;
+  label?: string;
+}
+
+const { name, variant = 'duotone', class: className, label } = Astro.props;
+const full = variant === 'regular' ? name : `${name}-${variant}`;
+const data = getIconData(ph as any, full);
+if (!data) throw new Error(`Ícone não encontrado: ph:${full}`);
+const svg = iconToSVG(data, { width: '1em', height: '1em' });
+---
+
+<svg
+  {...svg.attributes}
+  class:list={['icon', className]}
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  focusable="false"
+  set:html={svg.body}
+/>
+
+<style is:global>
+  .icon {
+    flex: none;
+    vertical-align: -0.15em;
+  }
+</style>

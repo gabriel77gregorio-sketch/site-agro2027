@@ -1,0 +1,59 @@
+﻿---
+import Icon from './Icon.astro';
+import { telUrl, mapsDirectionsUrl, whatsappUrl } from '../config/site';
+
+const wa = whatsappUrl();
+---
+
+<nav class="mobile-bar" aria-label="Atalhos de contato">
+  <a href={telUrl} class="ligar"><Icon name="phone-call" variant="fill" /> Ligar</a>
+  {wa && <a href={wa} class="zap"><Icon name="whatsapp-logo" variant="fill" /> WhatsApp</a>}
+  <a href={mapsDirectionsUrl} target="_blank" rel="noopener" class="mapa"><Icon name="map-pin" variant="fill" /> Como chegar</a>
+</nav>
+
+<style>
+  .mobile-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 60;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.55rem 0.7rem calc(0.55rem + env(safe-area-inset-bottom));
+    background: rgb(255 255 255 / 0.96);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 -4px 18px rgb(0 0 0 / 0.2);
+  }
+  a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 52px;
+    border-radius: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  a :global(.icon) {
+    font-size: 1.3rem;
+  }
+  .ligar {
+    background: var(--gold);
+    color: var(--brown-900);
+  }
+  .zap {
+    background: #25d366;
+    color: #072b14;
+  }
+  .mapa {
+    background: var(--green-700);
+    color: #fff;
+  }
+  @media (min-width: 900px) {
+    .mobile-bar {
+      display: none;
+    }
+  }
+</style>
+
